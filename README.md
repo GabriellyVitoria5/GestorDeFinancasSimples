@@ -24,11 +24,6 @@ Portanto, Seu José pediu que desenvolvêssemos uma aplicação onde ele possa c
 
 5. **Mensagens de Inicialização**: Ao iniciar o sistema, todas as entradas registradas anteriormente devem ser apresentadas. Caso não haja entradas, deve ser exibida a mensagem "não há entradas cadastradas até o momento", e os campos de soma e diferença devem ser ocultados.
 
-## Requisitos Não Funcionais
-
-- O sistema deve armazenar todos os dados em um banco de dados local.
-- O sistema deve ser desenvolvido em Java, utilizando os recursos disponíveis na biblioteca nativa Swing.
-
 ## Tecnologias Utilizadas
 - Java
 - PostgresSQL
