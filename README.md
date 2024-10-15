@@ -26,5 +26,5 @@ Portanto, Seu José pediu que desenvolvêssemos uma aplicação onde ele possa c
 
 ## Tecnologias Utilizadas
 - Java
-- PostgresSQL
+- MySQL
 
