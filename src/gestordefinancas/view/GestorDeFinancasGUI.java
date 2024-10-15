@@ -1,11 +1,8 @@
 package gestordefinancas.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 
 public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
@@ -209,13 +206,11 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         String campoData = txtData.getText();  // Obtém a data como String
-        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
         try {
             LocalDate data = LocalDate.parse(campoData, formatoEntrada);
-            String dataFormatada = data.format(formatoSaida); // data de entrada no formato yyyy-MM-dd
-            System.out.println("Data formatada: " + dataFormatada);
+            System.out.println("Data formatada: " + data);
         } catch (DateTimeParseException e) {
             System.out.println("Formato de data inválido: " + e.getMessage());
         }
