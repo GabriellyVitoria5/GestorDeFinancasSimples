@@ -21,4 +21,6 @@ public class EntradaDAO {
             System.out.println("Erro de conexão: " + e.getMessage());
         }
     }
+    
+    //apagar código de conexao e criar um método para insrir dados do cadastro no banco
 }

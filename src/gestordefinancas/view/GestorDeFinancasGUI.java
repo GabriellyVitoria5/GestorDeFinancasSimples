@@ -205,19 +205,21 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDebitoActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        String campoData = txtData.getText();  // Obtém a data como String
-        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String campoData = txtData.getText();  
+        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         try {
-            LocalDate data = LocalDate.parse(campoData, formatoEntrada);
-            System.out.println("Data formatada: " + data);
+            LocalDate dataEntrada = LocalDate.parse(campoData, formatoEntrada);
+            System.out.println("Data formatada: " + dataEntrada);
         } catch (DateTimeParseException e) {
             System.out.println("Formato de data inválido: " + e.getMessage());
         }
         
         //data atual com formato yyyy-MM-dd
-        LocalDate dataAtual = LocalDate.now();
-        System.out.println("Data atual: " + dataAtual);
+        LocalDate dataCadastro = LocalDate.now();
+        System.out.println("Data atual: " + dataCadastro);
+        
+        //pegar todos os dados inseridos, validar e passar para a classe que vai inserir no banco
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     public static void main(String args[]) {
