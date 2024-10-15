@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/assun_p3feroz/OneDrive/Documentos/NetBeansProjects/GestorDeFinancas/src/gestordefinancas/GestorDeFinancasGUI.java</file>
-            <file>file:/C:/Users/assun_p3feroz/OneDrive/Documentos/NetBeansProjects/GestorDeFinancas/src/gestordefinancas/GestorDeFinancas.java</file>
+            <file>file:/C:/Users/assun_p3feroz/OneDrive/Documentos/NetBeansProjects/GestorDeFinancas/src/gestordefinancas/model/Entrada.java</file>
+            <file>file:/C:/Users/assun_p3feroz/OneDrive/Documentos/NetBeansProjects/GestorDeFinancas/src/gestordefinancas/dao/EntradaDAO.java</file>
+            <file>file:/C:/Users/assun_p3feroz/OneDrive/Documentos/NetBeansProjects/GestorDeFinancas/src/gestordefinancas/view/GestorDeFinancasGUI.java</file>
         </group>
     </open-files>
 </project-private>
