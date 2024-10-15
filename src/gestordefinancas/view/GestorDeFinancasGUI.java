@@ -1,4 +1,4 @@
-package gestordefinancas;
+package gestordefinancas.view;
 
 public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
