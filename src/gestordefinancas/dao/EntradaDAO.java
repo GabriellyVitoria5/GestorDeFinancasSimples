@@ -80,7 +80,7 @@ public class EntradaDAO {
         // Cria uma lista para armazenar as entradas
         List<Entrada> entradas = new ArrayList<>();
         // Comando SQL para selecionar todos os dados da tabela 'entrada'
-        String sql = "SELECT nome, classificacao, valor, data_entrada, data_cadastro FROM entrada";
+        String sql = "SELECT * FROM entrada";
 
         // Tenta estabelecer conexão e preparar o comando SQL
         try (Connection conexao = conexao(); // Cria uma conexão com o banco
@@ -96,6 +96,8 @@ public class EntradaDAO {
                 entrada.setValor(rs.getDouble("valor"));
                 entrada.setDataEntrada(rs.getDate("data_entrada").toLocalDate());
                 entrada.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
+                entrada.setTipo(rs.getString("tipo"));
+                
                 // Adiciona a entrada à lista de entradas
                 entradas.add(entrada);
             }

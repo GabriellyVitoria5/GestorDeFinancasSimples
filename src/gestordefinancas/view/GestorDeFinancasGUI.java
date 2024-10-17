@@ -27,6 +27,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -184,7 +185,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelRecebido2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +214,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSaldo)
                             .addComponent(btnDespesa))
-                        .addGap(44, 44, 44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCadastrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnApagar)
@@ -270,51 +271,71 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     // Método chamado ao clicar no botão "Cadastrar"
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // Coleta os dados da interface
-        String nome = txtNome.getText();
+        String nome = txtNome.getText().trim();
         String classificacao = (String) cbClassificacao.getSelectedItem();
-        String valorString = txtValor.getText();
-        String campoData = txtData.getText();
-        DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String valorString = txtValor.getText().trim();
+        String campoData = txtData.getText().trim();
+        String tipo = "";
 
         // Valida os campos obrigatórios
         if (nome.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira um nome.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira um nome.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (valorString.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira um valor.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira um valor.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (campoData.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira uma data.");
+        if(campoData.equals("/  /")){
+            JOptionPane.showMessageDialog(null, "O campo Data deve ser preenchido.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
+        }
+        if(!btnSaldo.isSelected() && !btnDespesa.isSelected()){
+            JOptionPane.showMessageDialog(null, "Selecione o tipo de entrada: Ganho ou Despesa.", "Erro", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Verifica o tipo de entrada
+        if(btnSaldo.isSelected()){
+            tipo = "GANHO";
+        }
+        if(btnDespesa.isSelected()){
+            tipo = "DESPESA";
         }
 
         try {
             // Formata o valor e a data
             double valor = Double.parseDouble(valorString);
+            
+            DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataEntrada = LocalDate.parse(campoData, formatoEntrada);
-
-            // Verifica o tipo de entrada
-            String tipo = btnSaldo.isSelected() ? "GANHO" : "DESPESA";
 
             //Cria uma nova entrada e salva no banco de dados
             EntradaDAO dao = new EntradaDAO();
-            dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
-            System.out.println("Cadastro inserido com sucesso!");
-
+            //dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
+            JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
+            
             // Limpa os campos da interface após o cadastro
-            txtNome.setText("");
-            txtValor.setText("");
-            txtData.setText("");
+            limparCampos();
 
             // Atualiza a tabela após o cadastro
             carregarTabela();
+            
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira um valor válido.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira um valor válido.", "Erro", JOptionPane.WARNING_MESSAGE);
         } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira uma data válida no formato dd/MM/yyyy.");
+            JOptionPane.showMessageDialog(this, "Por favor, insira uma data válida no formato dd/MM/yyyy.",  "Erro", JOptionPane.WARNING_MESSAGE);
         }
+    }
+    
+    // Método para limpar campos
+    private void limparCampos(){
+        txtNome.setText("");
+        txtValor.setText("");
+        txtData.setText("");
+        cbClassificacao.setSelectedIndex(0);
+        btnSaldo.setEnabled(true);
+        btnDespesa.setEnabled(true);
     }
 
     // Método para carregar os dados da tabela a partir do banco de dados
@@ -352,10 +373,8 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao carregar dados da tabela: " + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Erro ao carregar dados da tabela: " + e.getMessage());
         }
-
-        //pegar todos os dados inseridos, validar e passar para a classe que vai inserir no banco
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -396,6 +415,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JToggleButton btnDespesa;
     private javax.swing.JToggleButton btnSaldo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbClassificacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

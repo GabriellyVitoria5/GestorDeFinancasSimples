@@ -9,7 +9,7 @@ public class Entrada {
     private double valor; // Valor da entrada
     private LocalDate dataEntrada; // Data em que a entrada foi feita
     private LocalDate dataCadastro; // Data em que a entrada foi cadastrada no sistema
-    private String tipo;
+    private String tipo; // Tipo de entrada: Ganho ou Despesa
 
     // Construtor que inicializa todos os atributos da classe
     public Entrada(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro, String tipo) {
