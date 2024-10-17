@@ -384,11 +384,16 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             DefaultTableModel modelTabela = (DefaultTableModel) tabela.getModel();
             modelTabela.setRowCount(0);
 
-            // Omitir botões de ganho e despesa se não houver entradas
+            // Omitir gastos, ganhos e diferença se não houver entradas
             if (entradas.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Não há entradas cadastradas até o momento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                btnGanho.setVisible(false);
-                btnDespesa.setVisible(false);
+
+                jLabel6.setVisible(false);
+                labelRecebido.setVisible(false);
+                jLabel7.setVisible(false);
+                labelGastos.setVisible(false);
+                jLabel8.setVisible(false);
+                labelDiferenca.setVisible(false);
             } 
             else {
                 // Adiciona cada entrada como uma linha na tabela 
@@ -412,6 +417,14 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                         somaDespesas += entrada.getValor();
                     }
                 }
+
+                // Tornar os labels e valores visíveis quando houver entradas
+                jLabel6.setVisible(true);
+                labelRecebido.setVisible(true);
+                jLabel7.setVisible(true);
+                labelGastos.setVisible(true);
+                jLabel8.setVisible(true);
+                labelDiferenca.setVisible(true);
             }
             
             // Exibir na tela as somas e diferença calculadas
@@ -422,7 +435,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao carregar dados da tabela: " + e.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
