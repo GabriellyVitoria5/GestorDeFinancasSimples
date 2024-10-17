@@ -2,18 +2,31 @@ package gestordefinancas.dao;
 
 import gestordefinancas.model.Entrada;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class EntradaDAO {
 
+    // Função para carregar as propriedades do banco de dados
+    private Properties carregarPropriedades() throws IOException {
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("src/gestordefinancas/dao/database.properties")) {
+            props.load(fis);
+        }
+        return props;
+    }
+
     // Função que estabelece a conexão com o banco de dados
-    private Connection conexao() throws SQLException {
-        String URL = "jdbc:mysql://localhost:3306/financas";
-        String USUARIO = "root";
-        String SENHA = "Gvc@_1234";
+    private Connection conexao() throws SQLException, IOException {
+        Properties props = carregarPropriedades();
+        String URL = props.getProperty("db.url");
+        String USUARIO = props.getProperty("db.user");
+        String SENHA = props.getProperty("db.password");
 
         return DriverManager.getConnection(URL, USUARIO, SENHA);
     }
@@ -36,7 +49,7 @@ public class EntradaDAO {
             if (rowsInserted > 0) {
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Erro ao inserir cadastro: " + e.getMessage());
         }
         return false;
@@ -55,7 +68,7 @@ public class EntradaDAO {
             if (rowsDeleted > 0) {
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Erro ao excluir cadastro: " + e.getMessage());
         }
         return false;
@@ -81,6 +94,8 @@ public class EntradaDAO {
                 
                 entradas.add(entrada);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return entradas;
     }

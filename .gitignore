@@ -6,3 +6,5 @@ out/
 
 .idea
 /dist/
+
+src/gestordefinancas/dao/database.properties
