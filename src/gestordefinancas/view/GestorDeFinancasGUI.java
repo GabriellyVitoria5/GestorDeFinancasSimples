@@ -418,10 +418,16 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         // Exlcuir entrada com base no nome
         String nome = (String) modelTabela.getValueAt(linhaSelecionada, 0);
         EntradaDAO dao = new EntradaDAO();
-        dao.excluirCadastro(nome);
+        Boolean resultado =  dao.excluirCadastro(nome);
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(rootPane, "Entrada apagada com sucesso!");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Erro ao excluir cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
 
         carregarTabela();
-        JOptionPane.showMessageDialog(rootPane, "Entrada apagada com sucesso!");
     }//GEN-LAST:event_btnApagarActionPerformed
 
     // Mostrar botões de ganho e gasto ao clicar no primeiro campo

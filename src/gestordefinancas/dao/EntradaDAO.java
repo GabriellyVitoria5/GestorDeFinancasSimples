@@ -43,7 +43,7 @@ public class EntradaDAO {
     }
 
     // Função para excluir dados do cadastro no banco de dados
-    public void excluirCadastro(String nome) {
+    public Boolean excluirCadastro(String nome) {
         String sql = "DELETE FROM entrada WHERE nome = ?";
 
         try (Connection conexao = conexao();
@@ -53,11 +53,12 @@ public class EntradaDAO {
 
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Cadastro excluído com sucesso!");
+                return true;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao excluir cadastro: " + e.getMessage());
         }
+        return false;
     }
 
     // Função para buscar todas as entradas cadastradas no banco de dados
