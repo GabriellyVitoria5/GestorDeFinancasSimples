@@ -5,3 +5,4 @@ mysql-connector-j-9.1.0
 out/
 
 .idea
+/dist/

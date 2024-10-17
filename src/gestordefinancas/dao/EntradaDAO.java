@@ -14,7 +14,7 @@ public class EntradaDAO {
     private Connection conexao() throws SQLException {
         String URL = "jdbc:mysql://localhost:3306/financas";
         String USUARIO = "root";
-        String SENHA = "12345678";
+        String SENHA = "Gvc@_1234";
 
         // Exibe mensagem no console quando a conexão for estabelecida
         System.out.println("Conexão com o banco de dados estabelecida com sucesso!");

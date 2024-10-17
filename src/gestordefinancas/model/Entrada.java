@@ -9,14 +9,16 @@ public class Entrada {
     private double valor; // Valor da entrada
     private LocalDate dataEntrada; // Data em que a entrada foi feita
     private LocalDate dataCadastro; // Data em que a entrada foi cadastrada no sistema
+    private String tipo;
 
     // Construtor que inicializa todos os atributos da classe
-    public Entrada(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro) {
+    public Entrada(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro, String tipo) {
         this.nome = nome;
         this.classificacao = classificacao;
         this.valor = valor;
         this.dataEntrada = dataEntrada;
         this.dataCadastro = dataCadastro;
+        this.tipo = tipo;
     }
 
     // Construtor padrão sem parâmetros (pode ser utilizado para criar objetos sem inicializar os atributos)
@@ -65,6 +67,16 @@ public class Entrada {
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     } // Define uma nova data de cadastro
+
+    public String getTipo() {
+        return tipo;
+    } // Retorna o tipo
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    } // Define o tipo da entrada: saldo ou debito
+    
+    
 
     // Método que retorna uma representação em string da entrada
     @Override
