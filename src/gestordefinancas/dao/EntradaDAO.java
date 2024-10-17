@@ -59,6 +59,8 @@ public class EntradaDAO {
     public Boolean excluirCadastro(String nome) {
         String sql = "DELETE FROM entrada WHERE nome = ?";
 
+        // TODO: excluir por id e não por nome
+
         try (Connection conexao = conexao();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {
 

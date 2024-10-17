@@ -1,5 +1,7 @@
 # Controle Financeiro do Seu José
 
+[//]: # (TODO: atualizar o README.md)
+
 ## Objetivos
 Este projeto consiste em um teste diagnóstico sobre conceitos de Programação Orientada a Objetos (POO), Banco de Dados e Engenharia de Software.
 

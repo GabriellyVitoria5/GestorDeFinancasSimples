@@ -528,3 +528,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }
+
+// TODO: modificar mensagens para serem temporárias na tela e implementar um tempo de espera antes de aparecerem
+
+// TODO: adicionar espaço em branco na classificação e impedir que o cliente deixe selecionado essa opção
