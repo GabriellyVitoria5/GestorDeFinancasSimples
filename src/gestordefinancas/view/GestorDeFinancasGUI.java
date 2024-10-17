@@ -317,7 +317,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
             //Cria uma nova entrada e salva no banco de dados
             EntradaDAO dao = new EntradaDAO();
-            //dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
+            dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
             JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
             
             // Limpa os campos da interface após o cadastro
@@ -401,7 +401,20 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
-        // apagar uma linha selecionada na tabela
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        int linhaSelecionada = tabela.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione uma entrada para apagar.", "Erro", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String nome = (String) model.getValueAt(linhaSelecionada, 0);
+        EntradaDAO dao = new EntradaDAO();
+        dao.excluirCadastro(nome);
+
+        carregarTabela();
+        JOptionPane.showMessageDialog(rootPane, "Entrada apagada com sucesso!");
     }//GEN-LAST:event_btnApagarActionPerformed
 
     public static void main(String args[]) {
