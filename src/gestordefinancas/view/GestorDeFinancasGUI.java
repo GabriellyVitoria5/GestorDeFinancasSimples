@@ -39,16 +39,16 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         txtData = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        btnSaldo = new javax.swing.JToggleButton();
+        btnGanho = new javax.swing.JToggleButton();
         btnDespesa = new javax.swing.JToggleButton();
         btnCadastrar = new javax.swing.JButton();
         cbClassificacao = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         labelRecebido = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        labelRecebido1 = new javax.swing.JLabel();
+        labelGastos = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        labelRecebido2 = new javax.swing.JLabel();
+        labelDiferenca = new javax.swing.JLabel();
         btnApagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,12 +91,12 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabela);
 
-        btnSaldo.setBackground(new java.awt.Color(51, 255, 51));
-        btnSaldo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSaldo.setText("Saldo (+)");
-        btnSaldo.addActionListener(new java.awt.event.ActionListener() {
+        btnGanho.setBackground(new java.awt.Color(51, 255, 51));
+        btnGanho.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnGanho.setText("Ganho(+)");
+        btnGanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaldoActionPerformed(evt);
+                btnGanhoActionPerformed(evt);
             }
         });
 
@@ -130,18 +130,23 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Gastos:");
 
-        labelRecebido1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        labelRecebido1.setText("R$ 0");
+        labelGastos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelGastos.setText("R$ 0");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Diferença:");
 
-        labelRecebido2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        labelRecebido2.setText("R$ 0");
+        labelDiferenca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        labelDiferenca.setText("R$ 0");
 
         btnApagar.setBackground(new java.awt.Color(51, 255, 204));
         btnApagar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnApagar.setText("Apagar");
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,7 +156,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGanho, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(btnDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -179,11 +184,11 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelRecebido1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelRecebido2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelDiferenca, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -212,7 +217,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                             .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSaldo)
+                            .addComponent(btnGanho)
                             .addComponent(btnDespesa))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCadastrar)
@@ -226,9 +231,9 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(labelRecebido)
                             .addComponent(jLabel7)
-                            .addComponent(labelRecebido1)
+                            .addComponent(labelGastos)
                             .addComponent(jLabel8)
-                            .addComponent(labelRecebido2))))
+                            .addComponent(labelDiferenca))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -252,19 +257,19 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaldoActionPerformed
-        if (btnSaldo.isSelected()) {
+    private void btnGanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGanhoActionPerformed
+        if (btnGanho.isSelected()) {
             btnDespesa.setEnabled(false);
         } else {
             btnDespesa.setEnabled(true);
         }
-    }//GEN-LAST:event_btnSaldoActionPerformed
+    }//GEN-LAST:event_btnGanhoActionPerformed
 
     private void btnDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDespesaActionPerformed
         if (btnDespesa.isSelected()) {
-            btnSaldo.setEnabled(false);
+            btnGanho.setEnabled(false);
         } else {
-            btnSaldo.setEnabled(true);
+            btnGanho.setEnabled(true);
         }
     }//GEN-LAST:event_btnDespesaActionPerformed
 
@@ -290,13 +295,13 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O campo Data deve ser preenchido.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(!btnSaldo.isSelected() && !btnDespesa.isSelected()){
+        if(!btnGanho.isSelected() && !btnDespesa.isSelected()){
             JOptionPane.showMessageDialog(null, "Selecione o tipo de entrada: Ganho ou Despesa.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
         // Verifica o tipo de entrada
-        if(btnSaldo.isSelected()){
+        if(btnGanho.isSelected()){
             tipo = "GANHO";
         }
         if(btnDespesa.isSelected()){
@@ -334,7 +339,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         txtValor.setText("");
         txtData.setText("");
         cbClassificacao.setSelectedIndex(0);
-        btnSaldo.setEnabled(true);
+        btnGanho.setEnabled(true);
         btnDespesa.setEnabled(true);
     }
 
@@ -344,6 +349,8 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         EntradaDAO entradaDAO = new EntradaDAO();
 
         try {
+            float somaGanhos = 0;
+            float somaDespesas = 0; 
             // Chama o método buscarEntradas() e obtém a lista de entradas
             List<Entrada> entradas = entradaDAO.buscarEntradas();
 
@@ -370,13 +377,30 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                     model.addRow(row); // Adiciona a linha à tabela
 
                     // Mostrar os campos de soma e diferença AQUI
+                    
+                    if(entrada.getTipo().equalsIgnoreCase("GANHO")){
+                        somaGanhos += entrada.getValor();
+                    }
+                    
+                    if(entrada.getTipo().equalsIgnoreCase("DESPESA")){
+                        somaDespesas += entrada.getValor();
+                    }
                 }
             }
+            
+            labelRecebido.setText("R$ " + somaGanhos + "");
+            labelGastos.setText("R$ " + somaDespesas + "");
+            labelDiferenca.setText("R$ " + (somaGanhos - somaDespesas) + "");
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao carregar dados da tabela: " + e.getMessage());
         }
-
+        
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        // apagar uma linha selecionada na tabela
+    }//GEN-LAST:event_btnApagarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -414,7 +438,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JToggleButton btnDespesa;
-    private javax.swing.JToggleButton btnSaldo;
+    private javax.swing.JToggleButton btnGanho;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbClassificacao;
     private javax.swing.JLabel jLabel1;
@@ -427,9 +451,9 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelDiferenca;
+    private javax.swing.JLabel labelGastos;
     private javax.swing.JLabel labelRecebido;
-    private javax.swing.JLabel labelRecebido1;
-    private javax.swing.JLabel labelRecebido2;
     private javax.swing.JTable tabela;
     private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtNome;
