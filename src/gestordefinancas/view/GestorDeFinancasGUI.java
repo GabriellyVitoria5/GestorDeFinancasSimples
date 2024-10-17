@@ -311,15 +311,16 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataEntrada = LocalDate.parse(campoData, formatoEntrada);
             
-            if(dataEntrada.isAfter(LocalDate.now())){
-                JOptionPane.showMessageDialog(null, "A data não pode ser futura!", "Erro", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             //Cria uma nova entrada e salva no banco de dados
             EntradaDAO dao = new EntradaDAO();
-            dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
-            JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
+            Boolean resultado = dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
+            
+            if(resultado){
+                JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Erro no cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
             
             // Limpa os campos e carregar a tebela com o novo registro
             limparCampos();

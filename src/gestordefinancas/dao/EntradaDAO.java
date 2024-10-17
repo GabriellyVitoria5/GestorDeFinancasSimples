@@ -19,7 +19,7 @@ public class EntradaDAO {
     }
 
     // Função para inserir dados do cadastro no banco de dados
-    public void inserirCadastro(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro, String tipo) {
+    public Boolean inserirCadastro(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro, String tipo) {
         String sql = "INSERT INTO entrada (nome, classificacao, valor, data_entrada, data_cadastro, tipo) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conexao = conexao();
@@ -34,11 +34,12 @@ public class EntradaDAO {
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Cadastro inserido com sucesso!");
+                return true;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao inserir cadastro: " + e.getMessage());
         }
+        return false;
     }
 
     // Função para excluir dados do cadastro no banco de dados
