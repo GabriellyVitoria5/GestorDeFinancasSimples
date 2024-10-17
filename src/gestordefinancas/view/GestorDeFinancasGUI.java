@@ -69,6 +69,11 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         jLabel5.setText("Data Entrada:");
 
         txtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNomeMouseClicked(evt);
+            }
+        });
 
         txtValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -359,11 +364,11 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             DefaultTableModel modelTabela = (DefaultTableModel) tabela.getModel();
             modelTabela.setRowCount(0);
 
-            // Bloquear botões de ganho e despesa se não houver entradas
+            // Omitir botões de ganho e despesa se não houver entradas
             if (entradas.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Não há entradas cadastradas até o momento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                btnGanho.setEnabled(false);
-                btnDespesa.setEnabled(false);
+                btnGanho.setVisible(false);
+                btnDespesa.setVisible(false);
             } 
             else {
                 // Adiciona cada entrada como uma linha na tabela 
@@ -418,6 +423,12 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         carregarTabela();
         JOptionPane.showMessageDialog(rootPane, "Entrada apagada com sucesso!");
     }//GEN-LAST:event_btnApagarActionPerformed
+
+    // Mostrar botões de ganho e gasto ao clicar no primeiro campo
+    private void txtNomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNomeMouseClicked
+        btnGanho.setVisible(true);
+        btnDespesa.setVisible(true);
+    }//GEN-LAST:event_txtNomeMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
