@@ -7,16 +7,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Classe que gerencia as operações de banco de dados relacionadas à entrada financeira
 public class EntradaDAO {
 
     // Função que estabelece a conexão com o banco de dados
     private Connection conexao() throws SQLException {
         String URL = "jdbc:mysql://localhost:3306/financas";
         String USUARIO = "root";
-        String SENHA = "12345678";
+        String SENHA = "Gvc@_1234";
 
-        System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
         return DriverManager.getConnection(URL, USUARIO, SENHA);
     }
 

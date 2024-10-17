@@ -11,7 +11,6 @@ public class Entrada {
     private LocalDate dataCadastro;
     private String tipo;
 
-    // Construtor que inicializa todos os atributos da classe
     public Entrada(String nome, String classificacao, double valor, LocalDate dataEntrada, LocalDate dataCadastro, String tipo) {
         this.nome = nome;
         this.classificacao = classificacao;
@@ -21,12 +20,9 @@ public class Entrada {
         this.tipo = tipo;
     }
 
-    // Construtor padrão sem parâmetros (pode ser utilizado para criar objetos sem inicializar os atributos)
     public Entrada() {
 
     }
-
-    // Funções getter e setter para acessar e modificar os atributos da classe
 
     public String getNome() {
         return nome;
@@ -75,10 +71,7 @@ public class Entrada {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
 
-    // Função que retorna uma representação em string da entrada
     @Override
     public String toString() {
         return "Entrada{" + "nome=" + nome + ", classificacao=" + classificacao + ", valor=" + valor + ", dataEntrada=" + dataEntrada + ", dataCadastro=" + dataCadastro + '}';

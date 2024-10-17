@@ -14,8 +14,8 @@ import java.util.List;
 public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
     public GestorDeFinancasGUI() {
-        initComponents(); // Inicializa os componentes da interface
-        carregarTabela(); // Carrega os dados existentes na tabela
+        initComponents(); 
+        carregarTabela(); // Carrega os dados existentes na tabela ao iniciar o programa
     }
 
     /**
@@ -273,9 +273,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDespesaActionPerformed
 
-    // Método chamado ao clicar no botão "Cadastrar"
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // Coleta os dados da interface
         String nome = txtNome.getText().trim();
         String classificacao = (String) cbClassificacao.getSelectedItem();
         String valorString = txtValor.getText().trim();
@@ -299,8 +297,6 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione o tipo de entrada: Ganho ou Despesa.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        // Verifica o tipo de entrada
         if(btnGanho.isSelected()){
             tipo = "GANHO";
         }
@@ -314,16 +310,19 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataEntrada = LocalDate.parse(campoData, formatoEntrada);
+            
+            if(dataEntrada.isAfter(LocalDate.now())){
+                JOptionPane.showMessageDialog(null, "A data não pode ser futura!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             //Cria uma nova entrada e salva no banco de dados
             EntradaDAO dao = new EntradaDAO();
             dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
             JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
             
-            // Limpa os campos da interface após o cadastro
+            // Limpa os campos e carregar a tebela com o novo registro
             limparCampos();
-
-            // Atualiza a tabela após o cadastro
             carregarTabela();
             
         } catch (NumberFormatException e) {
@@ -333,7 +332,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         }
     }
     
-    // Método para limpar campos
+    // Método para limpar os campos após o cadastro
     private void limparCampos(){
         txtNome.setText("");
         txtValor.setText("");
@@ -345,7 +344,6 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
     // Método para carregar os dados da tabela a partir do banco de dados
     private void carregarTabela() {
-        // Cria uma instância do DAO para buscar as entradas
         EntradaDAO entradaDAO = new EntradaDAO();
 
         try {
@@ -353,20 +351,21 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             float somaGanhos = 0;
             float somaDespesas = 0; 
             
-            // Chama o método buscarEntradas() e obtém a lista de entradas
+            // Obtém a lista de todas as entradas cadastradas 
             List<Entrada> entradas = entradaDAO.buscarEntradas();
 
             // Limpa a tabela antes de recarregar os dados
-            DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-            model.setRowCount(0);
+            DefaultTableModel modelTabela = (DefaultTableModel) tabela.getModel();
+            modelTabela.setRowCount(0);
 
-            // Verifica se há entradas registradas
+            // Bloquear botões de ganho e despesa se não houver entradas
             if (entradas.isEmpty()) {
-                // Se não houver entradas, exibe uma mensagem e omite os campos de soma e diferença
                 JOptionPane.showMessageDialog(null, "Não há entradas cadastradas até o momento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                // Esconder os campos de soma e diferença AQUI
-            } else {
-                // Adiciona cada entrada como uma linha na tabela
+                btnGanho.setEnabled(false);
+                btnDespesa.setEnabled(false);
+            } 
+            else {
+                // Adiciona cada entrada como uma linha na tabela 
                 for (Entrada entrada : entradas) {
                     Object[] row = new Object[]{
                             entrada.getNome(),
@@ -376,9 +375,9 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                             entrada.getDataCadastro().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                             entrada.getTipo()
                     };
-                    model.addRow(row); // Adiciona a linha à tabela
+                    modelTabela.addRow(row); 
 
-                    // Verificar qual entrada é de ganho ou despesa 
+                    // Verificar o tipo da entrada 
                     if(entrada.getTipo().equalsIgnoreCase("GANHO")){
                         somaGanhos += entrada.getValor();
                     }
@@ -401,15 +400,17 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        // Pegar índice da linha escolhida na tabela pelo usuário
+        DefaultTableModel modelTabela =  (DefaultTableModel) tabela.getModel();
         int linhaSelecionada = tabela.getSelectedRow();
 
         if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione uma entrada para apagar.", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione uma entrada na tabela para apagar.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        String nome = (String) model.getValueAt(linhaSelecionada, 0);
+        
+        // Exlcuir entrada com base no nome
+        String nome = (String) modelTabela.getValueAt(linhaSelecionada, 0);
         EntradaDAO dao = new EntradaDAO();
         dao.excluirCadastro(nome);
 
