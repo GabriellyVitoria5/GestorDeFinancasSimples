@@ -349,8 +349,10 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         EntradaDAO entradaDAO = new EntradaDAO();
 
         try {
+            // Somas os ganhos e despesas para calcular a diferença 
             float somaGanhos = 0;
             float somaDespesas = 0; 
+            
             // Chama o método buscarEntradas() e obtém a lista de entradas
             List<Entrada> entradas = entradaDAO.buscarEntradas();
 
@@ -376,8 +378,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                     };
                     model.addRow(row); // Adiciona a linha à tabela
 
-                    // Mostrar os campos de soma e diferença AQUI
-                    
+                    // Verificar qual entrada é de ganho ou despesa 
                     if(entrada.getTipo().equalsIgnoreCase("GANHO")){
                         somaGanhos += entrada.getValor();
                     }
@@ -388,6 +389,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
                 }
             }
             
+            // Exibir na tela as somas e diferença calculadas
             labelRecebido.setText("R$ " + somaGanhos + "");
             labelGastos.setText("R$ " + somaDespesas + "");
             labelDiferenca.setText("R$ " + (somaGanhos - somaDespesas) + "");
