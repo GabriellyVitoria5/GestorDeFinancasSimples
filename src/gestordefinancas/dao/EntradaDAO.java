@@ -56,20 +56,17 @@ public class EntradaDAO {
     }
 
     // Função para excluir dados do cadastro no banco de dados
-    public Boolean excluirCadastro(String nome) {
-        String sql = "DELETE FROM entrada WHERE nome = ?";
-
-        // TODO: excluir por id e não por nome
+    public Boolean excluirCadastro(int id) {
+        String sql = "DELETE FROM entrada WHERE id = ?";
 
         try (Connection conexao = conexao();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setString(1, nome);
+            stmt.setInt(1, id);
 
             int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                return true;
-            }
+
+            return rowsDeleted > 0;
         } catch (SQLException | IOException e) {
             System.out.println("Erro ao excluir cadastro: " + e.getMessage());
         }
@@ -87,13 +84,14 @@ public class EntradaDAO {
 
             while (rs.next()) {
                 Entrada entrada = new Entrada();
+                entrada.setId(rs.getInt("id"));
                 entrada.setNome(rs.getString("nome"));
                 entrada.setClassificacao(rs.getString("classificacao"));
                 entrada.setValor(rs.getDouble("valor"));
                 entrada.setDataEntrada(rs.getDate("data_entrada").toLocalDate());
                 entrada.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
                 entrada.setTipo(rs.getString("tipo"));
-                
+
                 entradas.add(entrada);
             }
         } catch (IOException e) {

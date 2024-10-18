@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 // Classe que representa uma entrada financeira
 public class Entrada {
+    private int id;
     private String nome;
     private String classificacao;
     private double valor;
@@ -70,6 +71,14 @@ public class Entrada {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
