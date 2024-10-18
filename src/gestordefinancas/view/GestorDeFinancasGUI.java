@@ -19,7 +19,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
     public GestorDeFinancasGUI() {
         initComponents();
-        carregarTabela(); // Carrega os dados existentes na tabela ao iniciar o programa
+        SwingUtilities.invokeLater(this::carregarTabela); // Carrega os dados existentes na tabela após a GUI ser visível
     }
 
     /**
@@ -150,7 +150,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         txtValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         cbClassificacao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbClassificacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CASA ", "COMPRAS", "SAÚDE", "AUTOMÓVEL", "ALIMENTAÇÃO", "BEM ESTAR", "INVESTIMENTO", "SALÁRIO", "OUTROS" }));
+        cbClassificacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "CASA ", "COMPRAS", "SAÚDE", "AUTOMÓVEL", "ALIMENTAÇÃO", "BEM ESTAR", "INVESTIMENTO", "SALÁRIO", "OUTROS" }));
 
         txtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtNome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -319,11 +319,15 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             return;
         }
         if(campoData.equals("/  /")){
-            JOptionPane.showMessageDialog(null, "O campo Data deve ser preenchido.", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "O campo Data deve ser preenchido.", "Erro", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (classificacao.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione uma classificação.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if(!btnGanho.isSelected() && !btnDespesa.isSelected()){
-            JOptionPane.showMessageDialog(null, "Selecione o tipo de entrada: Ganho ou Despesa.", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecione o tipo de entrada: Ganho ou Despesa.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
         if(btnGanho.isSelected()){
@@ -345,10 +349,10 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             Boolean resultado = dao.inserirCadastro(nome, classificacao, valor, dataEntrada, LocalDate.now(), tipo);
 
             if(resultado){
-                JOptionPane.showMessageDialog(rootPane, "Cadastro inserido com sucesso!");
+                showTemporaryMessage("Cadastro inserido com sucesso!", 1000);
             }
             else{
-                JOptionPane.showMessageDialog(null, "Erro no cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro no cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
 
             // Limpa os campos e carregar a tebela com o novo registro
@@ -391,7 +395,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
 
             // Omitir gastos, ganhos e diferença se não houver entradas
             if (entradas.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Não há entradas cadastradas até o momento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                showTemporaryMessage("Não há entradas cadastradas até o momento.", 1000);
 
                 jLabel6.setVisible(false);
                 labelRecebido.setVisible(false);
@@ -440,7 +444,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             labelDiferenca.setText("R$ " + (somaGanhos - somaDespesas) + "");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao carregar dados da tabela: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao carregar dados da tabela: " + e.getMessage());
         }
 
     }//GEN-LAST:event_btnCadastrarActionPerformed
@@ -451,7 +455,7 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         int linhaSelecionada = tabela.getSelectedRow();
 
         if (linhaSelecionada == -1) {
-            JOptionPane.showMessageDialog(null, "Selecione uma entrada na tabela para apagar.", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecione uma entrada na tabela para apagar.", "Erro", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -463,9 +467,9 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         Boolean resultado = dao.excluirCadastro(id);
 
             if(resultado){
-                JOptionPane.showMessageDialog(rootPane, "Entrada apagada com sucesso!");
+                showTemporaryMessage("Entrada apagada com sucesso!", 1000);
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Erro ao excluir cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
 
             carregarTabela();
@@ -510,6 +514,17 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
         });
     }
 
+    // Função para mostrar uma mensagem temporária na tela
+    private void showTemporaryMessage(String message, int duration) {
+        JOptionPane pane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE);
+        JDialog dialog = pane.createDialog(this, "Message");
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        Timer timer = new Timer(duration, e -> dialog.dispose());
+        timer.setRepeats(false);
+        timer.start();
+        dialog.setVisible(true);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnCadastrar;
@@ -537,7 +552,3 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }
-
-// TODO: modificar mensagens para serem temporárias na tela e implementar um tempo de espera antes de aparecerem
-
-// TODO: adicionar espaço em branco na classificação e impedir que o cliente deixe selecionado essa opção
