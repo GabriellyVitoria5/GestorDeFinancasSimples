@@ -459,6 +459,12 @@ public class GestorDeFinancasGUI extends javax.swing.JFrame {
             return;
         }
 
+        // Confirma a exclusão antes de apagar
+        int confirma = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja exluir?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (confirma != JOptionPane.YES_OPTION) {
+            return;
+        }
+
         // Obtém o ID da lista de IDs
         int id = listaIds.get(linhaSelecionada);
         EntradaDAO dao = new EntradaDAO();
