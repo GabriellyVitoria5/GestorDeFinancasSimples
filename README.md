@@ -30,7 +30,7 @@ Engenharia de Software.
     - No IntelliJ IDEA: `File > Open`;
     ````
 
-3. Execute o script `banco.sql` no MySQL Workbench:
+3. Execute o script `financas.sql` no MySQL Workbench:
    ````
     - Crie um banco de dados chamado `financas`;
     - Execute o script;
@@ -42,7 +42,22 @@ Engenharia de Software.
       `database.properties` e configure com as informações do seu banco de dados;
     ````
 
-5. Execute o projeto:
+5. Adicionae a biblioteca `MySQL Connector` ao projeto
+
+   Baixe o MySQL Connector: 
+   ````
+   - Faça o download do conector JDBC do MySQL pelo link: [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/).
+   - Escolha a opção `Platform Independent`.
+     ````
+
+   Adicione o JAR à sua IDE:
+   ````
+    - No Eclipse: Botão direito no projeto > `Build Path` > `Add External Archives...` e selecione o arquivo `mysql-connector-java-x.x.xx.jar` baixado.
+    - No NetBeans: Botão direito no projeto > `Properties` > `Libraries` > `Add JAR/Folder` e selecione o arquivo `mysql-connector-java-x.x.xx.jar`.
+    - No IntelliJ IDEA: Botão direito no projeto > `Open Module Settings` > `Modules` > `Dependencies` > `+` > `JARs or Directories` e selecione o arquivo `mysql-connector-java-x.x.xx.jar`.
+    ````
+
+7. Execute o projeto:
    ````
     - No Eclipse: `Run > Run`;
     - No NetBeans: `Run > Run Project`;
